@@ -1,8 +1,8 @@
 #pragma once
+#include <bitset>
 #include <cstdint>
 #include <print>
 #include <unordered_map>
-#include <variant>
 
 class Token {
 private:
@@ -14,25 +14,7 @@ private:
   // Declare the type variable and the variant value
   Token_Type _type;
 
-  std::variant<std::int32_t, float, std::uint8_t> value;
-
-  std::int32_t get_int_value() {
-    return std::holds_alternative<std::int32_t>(this->value)
-               ? std::get<int32_t>(this->value)
-               : 0;
-  }
-
-  std::uint8_t get_uint8_value() {
-    return std::holds_alternative<std::uint8_t>(this->value)
-               ? std::get<std::uint8_t>(this->value)
-               : 0;
-  }
-
-  float get_float_value() {
-    return std::holds_alternative<float>(this->value)
-               ? std::get<float>(this->value)
-               : 0.0;
-  }
+  std::bitset<32> value;
 
 public:
   Token(std::string minemonic) {
@@ -53,18 +35,20 @@ public:
 
   Token_Type get_type() { return this->_type; }
 
+  std::uint32_t get_value() { return this->value.to_ulong(); }
+
   void print_value() {
     if (get_type() == Token::Token_Type::INT) {
-      std::println("int: {}", get_int_value());
+      std::println("int: {}", (std::int32_t)get_value());
     }
     if (get_type() == Token::Token_Type::STR) {
-      std::println("str: {}", get_uint8_value());
+      std::println("str: {}", (std::uint8_t)get_value());
     }
     if (get_type() == Token::Token_Type::INST) {
-      std::println("inst: {}", get_uint8_value());
+      std::println("inst: {}", (std::uint8_t)get_value());
     }
     if (get_type() == Token::Token_Type::FLOAT) {
-      std::println("float: {}", get_float_value());
+      std::println("float: {}", (float)get_value());
     }
   }
 };
