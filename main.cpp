@@ -1,17 +1,8 @@
-#include "./Tokenizer.hpp"
-#include <fstream>
-#include <sstream>
+#include "Compiler.hpp"
 
 int main() {
-  std::ifstream file("asm.s");
-  std::stringstream buffer;
-  buffer << file.rdbuf();
-
-  auto tokens = Tokenizer(buffer.str()).get_tokens();
-
-  for (auto token : tokens) {
-    token.print_value();
-  }
+  auto comp = Compiler("asm.s");
+  comp.compile("asm.bin");
 
   return 0;
 }
