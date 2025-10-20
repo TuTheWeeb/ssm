@@ -17,7 +17,7 @@ private:
   // Declare the type variable and the variant value
   Token_Type _type;
 
-  std::bitset<32> value;
+  std::bitset<64> value;
 
 public:
   Token(std::string minemonic) {
@@ -26,7 +26,7 @@ public:
       if (minemonic.find(".") != std::string::npos) {
         _type = Token_Type::FLOAT;
         float tempf = std::stof(minemonic);
-        std::memcpy(&value, &tempf, sizeof(float));
+        std::memcpy(&value, &tempf, sizeof(tempf));
       } else {
         _type = Token_Type::INT;
         value = std::stoi(minemonic);
@@ -39,5 +39,5 @@ public:
 
   Token_Type get_type() { return this->_type; }
 
-  std::bitset<32> get_value() { return this->value; }
+  std::bitset<64> get_value() { return this->value; }
 };

@@ -1,8 +1,11 @@
-#include "Compiler.hpp"
+#include "Assembler.hpp"
+#include "Virtualmachine.hpp"
 
 int main() {
-  auto comp = Compiler("asm.s");
-  comp.compile("asm.bin");
+  auto assm = Assembler("asm.s");
+  assm.assemble("asm.bin");
+
+  auto _ = SSMVm("asm.bin");
 
   return 0;
 }
